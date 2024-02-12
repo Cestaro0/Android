@@ -33,9 +33,10 @@ This image cover a lot layers, and we'll talk about all.
   - APK
   - JNI
   - Analisys whit IDA
+   - Static
    - Dinamic
     - Debug  
-   - Static
+   
 
 ### ABD
 It is a command-line interface that allows direct communication and control of Android devices connected to a host computer. This versatile tool allows developers to access advanced Android operating system features and perform a variety of essential tasks such as installing and uninstalling apps, transferring files, diagnosing problems, simulating touch events, and more. It works via USB or TCP. most used commands: adb root, adb shell, adb push, adb pull, adb reboot, adb reboot bootloader.
@@ -59,6 +60,7 @@ It is a command-line interface that allows direct communication and control of A
 Here, you can see that JNI acts as an intermediary between the JVM and the C++ .so where it runs the Java code, which in turn calls C++ functions. The .so is created with a mix of Java and C++ in a JNI header <a href="https://github.com/Cestaro0/How-To-Use-JNI">see more</a>
 
 ### Analisys whit IDA
+### static
  When descompact the .apk file, in the folders we can find the .so jni, and analysis it!
  The reverse engineering in .so is so simple, but is necessary this plugin:
   - jni_all.h
@@ -82,14 +84,45 @@ JNIEnv* a1
 ```
 it's the magic 
 
-In x32 it is more complicated as it does not accept this modification, so you must use this header
+In x32 it is more complicated as it does not accept this modification, so you must use this header, on ida access
+File > Load File > Parse C header file
+and choose the jni_all.h (donwload in this <a href="https://gist.github.com/jcalabres/bf8d530b3f18c30ca6f66388357b1d91">link</a>
+before, use between x64.
+note: the header will not work if there is any protection in the .so
 
+### debug / dinamic
+Debugging Android applications in IDA Pro involves converting the application's executable code, present in the APK file, into a readable and structured format. With the resulting .so file, which contains the code in C/C++ format, the analyst can open the lib in IDA Pro and explore its structure, identify functions and understand the execution flow. The ability to set breakpoints and pause application execution at specific times makes it possible to drill down into the device's memory and registers while running.
 
+Preparation at IDA
+Load the lib you are going to analyze into IDA and select the desired breakpoints, after that we will move on to the part where we use ADB.
 
+Preparation with ABD
+In your IDA Pro folder, you will find the "dbgsrv" folder, inside it we will find "android_server" (for armeabi-v7a x32 cell phones) and "android_server64" (for arm64-v8a x64 cell phones), according to the architecture of your device, move one of the files to the folder where ADB is. After that, we open the terminal inside the ADB folder and execute the following commands, with the cell phone connected to the PC via the USB cable with USB debugging activated on the device:
 
+C:\platform-tools\> adb devices
 
+C:\platform-tools\> adb push <android_server> /data/local/tmp
 
+C:\platform-tools\> adb shell
 
+Now on the device terminal
+
+android:/ $ su
+
+android:/ # chmod 755 /data/local/tmp/<android_server>
+
+android:/ # ./data/local/tmp/<android_server>
+
+After that, minimize this terminal and open another one from adb, let's redirect the ports so we can debug with IDA:
+
+C:\platform-tools\> adb forward tcp:23946 tcp:23946
+
+Starting debugging
+Within IDA Pro, in the "Debugger>Select debugger" tab, select "Remote ARM Linux/Android debugger" and click OK.
+
+Now in the "Debugger>Process options..." tab, in the "Hostname" you will enter 127.0.0.1 and in the "Port" you will enter the same number generated in the previous cmd, after that click OK.
+
+Okay, basically all the configurations have been made and everything is ready to start debugging. With the application you want to debug open on your Android device, go to IDA Pro in the "Debugger>Attach to process..." tab to access the processes running on your device, find the process of the application you want to debug, From then on, it will freeze the application with it paused, press F9 and then continue with the application, when it reaches its breakpoint it will pause and you can debug using IDA Pro (Remember to keep "Use source-level debugging" activated to breakpoint function).
 
 
 
