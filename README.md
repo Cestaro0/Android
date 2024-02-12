@@ -39,7 +39,15 @@ This image cover a lot layers, and we'll talk about all.
    
 
 ### ABD
-It is a command-line interface that allows direct communication and control of Android devices connected to a host computer. This versatile tool allows developers to access advanced Android operating system features and perform a variety of essential tasks such as installing and uninstalling apps, transferring files, diagnosing problems, simulating touch events, and more. It works via USB or TCP. most used commands: adb root, adb shell, adb push, adb pull, adb reboot, adb reboot bootloader.
+It is a command-line interface that allows direct communication and control of Android devices connected to a host computer. This versatile tool allows developers to access advanced Android operating system features and perform a variety of essential tasks such as installing and uninstalling apps, transferring files, diagnosing problems, simulating touch events, and more. It works via USB or TCP. most used commands: 
+```
+adb root
+adb shell
+adb push
+adb pull
+adb reboot
+adb reboot bootloader
+```
 
 ### ROOT
  The android is based on linux kernel, so command line is more used. And exists the user permissions, the root is the level with all permission (sudo).
@@ -47,12 +55,13 @@ It is a command-line interface that allows direct communication and control of A
 
  ### APK
  APK is the extension of the app, like this .jar or .zip, then in our device connected in PC use adb push "path to the app" with in this PC will have "base.apk". The .apk struct is: 
+```
   .apk
     |- extension for lib C/C++
     |            |- libname.so
     |- .dex classes
     |- .xml
-
+```
 
   ### JNI
    Now, let's talk about JNI (Java Native Interface). To put it simply, it's a way that Oracle created for Java to communicate with C++. There's also JNA, maintained by a GitHub community (but we won't discuss it here). Below is an example image:
