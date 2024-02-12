@@ -98,7 +98,7 @@ Load the lib you are going to analyze into IDA and select the desired breakpoint
 
 Preparation with ABD
 In your IDA Pro folder, you will find the "dbgsrv" folder, inside it we will find "android_server" (for armeabi-v7a x32 cell phones) and "android_server64" (for arm64-v8a x64 cell phones), according to the architecture of your device, move one of the files to the folder where ADB is. After that, we open the terminal inside the ADB folder and execute the following commands, with the cell phone connected to the PC via the USB cable with USB debugging activated on the device:
-
+```
 C:\platform-tools\> adb devices
 
 C:\platform-tools\> adb push <android_server> /data/local/tmp
@@ -116,7 +116,7 @@ android:/ # ./data/local/tmp/<android_server>
 After that, minimize this terminal and open another one from adb, let's redirect the ports so we can debug with IDA:
 
 C:\platform-tools\> adb forward tcp:23946 tcp:23946
-
+```
 Starting debugging
 Within IDA Pro, in the "Debugger>Select debugger" tab, select "Remote ARM Linux/Android debugger" and click OK.
 
