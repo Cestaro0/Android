@@ -128,13 +128,5 @@ Okay, basically all the configurations have been made and everything is ready to
 
 
 
-
-
-
-
-
-
-
-
 References:
 <a href="https://developer.android.com/guide/platform">Android architeture</a>
