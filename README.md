@@ -86,7 +86,7 @@ it's the magic
 
 In x32 it is more complicated as it does not accept this modification, so you must use this header, on ida access
 File > Load File > Parse C header file
-and choose the jni_all.h (donwload in this <a href="https://gist.github.com/jcalabres/bf8d530b3f18c30ca6f66388357b1d91">link</a>
+and choose the jni_all.h donwload in this <a href="https://gist.github.com/jcalabres/bf8d530b3f18c30ca6f66388357b1d91">link</a>
 before, use between x64.
 note: the header will not work if there is any protection in the .so
 
