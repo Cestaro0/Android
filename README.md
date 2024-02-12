@@ -70,7 +70,7 @@ so you will often come across this:
 void foo(__int64 a1, __int64 a2, __int8* a3)
 {
  wchar_t* a4;
- a4 = (wchar_t*)(**a1 + 123)(a1, a3)
+ a4 = (wchar_t*)(**a1 + 123)(a1, a3, 0)
 }
  ```
 The analysis they is so complicated, but not be afraid, just click on the variable and press "y"
@@ -83,6 +83,9 @@ just modify to
 JNIEnv* a1
 ```
 it's the magic 
+```c++
+a4 = (*env)->GetStringUTFChars(a3, 0)
+```
 
 In x32 it is more complicated as it does not accept this modification, so you must use this header, on ida access
 File > Load File > Parse C header file
