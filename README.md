@@ -107,9 +107,9 @@ C:\platform-tools\> adb devices
 C:\platform-tools\> adb push <android_server> /data/local/tmp
 
 C:\platform-tools\> adb shell
-
+```
 Now on the device terminal
-
+```
 android:/ $ su
 
 android:/ # chmod 755 /data/local/tmp/<android_server>
