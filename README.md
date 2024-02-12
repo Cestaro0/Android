@@ -135,10 +135,3 @@ Within IDA Pro, in the "Debugger>Select debugger" tab, select "Remote ARM Linux/
 Now in the "Debugger>Process options..." tab, in the "Hostname" you will enter 127.0.0.1 and in the "Port" you will enter the same number generated in the previous cmd, after that click OK.
 
 Okay, basically all the configurations have been made and everything is ready to start debugging. With the application you want to debug open on your Android device, go to IDA Pro in the "Debugger>Attach to process..." tab to access the processes running on your device, find the process of the application you want to debug, From then on, it will freeze the application with it paused, press F9 and then continue with the application, when it reaches its breakpoint it will pause and you can debug using IDA Pro (Remember to keep "Use source-level debugging" activated to breakpoint function).
-
-
-
-
-
-References:
-<a href="https://developer.android.com/guide/platform">Android architeture</a>
