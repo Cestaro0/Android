@@ -26,17 +26,63 @@ This image cover a lot layers, and we'll talk about all.
 
 
 
+## Reverse Engineering
+ This topic is more detailed because I love RE and is my area of ​​activity. We'll talking for this:
+  - ABD
+  - ROOT
+  - APK
+  - JNI
+  - Analisys whit IDA
+   - Dinamic
+    - Debug  
+   - Static
+
+### ABD
+It is a command-line interface that allows direct communication and control of Android devices connected to a host computer. This versatile tool allows developers to access advanced Android operating system features and perform a variety of essential tasks such as installing and uninstalling apps, transferring files, diagnosing problems, simulating touch events, and more. It works via USB or TCP. most used commands: adb root, adb shell, adb push, adb pull, adb reboot, adb reboot bootloader.
+
+### ROOT
+ The android is based on linux kernel, so command line is more used. And exists the user permissions, the root is the level with all permission (sudo).
+ To get root in this device is necessary granted the "img.boot" (modified image for root access) relative our dispositive and use "fastoot" tool. Firstly connect the device in this PC, and use adb reboot bootloader (for the device in mode recovery) after use fastboot boot "boot.img", ready, our device is rooted!
+
+ ### APK
+ APK is the extension of the app, like this .jar or .zip, then in our device connected in PC use adb push "path to the app" with in this PC will have "base.apk". The .apk struct is: 
+  .apk
+    |- extension for lib C/C++
+    |            |- libname.so
+    |- .dex classes
+    |- .xml
 
 
+  ### JNI
+   Now, let's talk about JNI (Java Native Interface). To put it simply, it's a way that Oracle created for Java to communicate with C++. There's also JNA, maintained by a GitHub community (but we won't discuss it here). Below is an example image:
+<img src="https://github.com/Cestaro0/Android/assets/99103680/f9ac3384-ea7c-4331-9fcb-a09f59a3aeb4">
+Here, you can see that JNI acts as an intermediary between the JVM and the C++ .so where it runs the Java code, which in turn calls C++ functions. The .so is created with a mix of Java and C++ in a JNI header <a href="https://github.com/Cestaro0/How-To-Use-JNI">see more</a>
 
+### Analisys whit IDA
+ When descompact the .apk file, in the folders we can find the .so jni, and analysis it!
+ The reverse engineering in .so is so simple, but is necessary this plugin:
+  - jni_all.h
+in the arm64-v8a (x64 architeture) we don't have the problem of rebuilding structures.
+so you will often come across this:
+ ```c++
+void foo(__int64 a1, __int64 a2, __int8* a3)
+{
+ wchar_t* a4;
+ a4 = (wchar_t*)(**a1 + 123)(a1, a3)
+}
+ ```
+The analysis they is so complicated, but not be afraid, just click on the variable and press "y"
+the display is:
+```c++
+__int64 a1
+```
+just modify to
+```c++
+JNIEnv* a1
+```
+it's the magic 
 
-
-
-
-
-
-
-
+In x32 it is more complicated as it does not accept this modification, so you must use this header
 
 
 
