@@ -9,25 +9,24 @@ The document is talk about the following tópics:
 First is necessary understand that android platform is based in linux kernel.
 See the image below.
 <img src="https://github.com/Cestaro0/Android/assets/99103680/6a73d8cd-4008-4e16-9dba-d4e1175cf083"/>
-This image cover a lot layers, and we'll talk about all.
+This image covers many layers, and we'll discuss each one.
  ### Linux Kernel
-  As said before, the android is based in linux kernel, for more optios that he offers, as security levels, permissions, management of the users.
+  As mentioned before, Android is based on the Linux kernel, which provides various features such as security levels, permissions, and user management.
  ### HAL
-  Hal is the standard interface of implementation the hardware for the android it's independent for down levels drivers.
+  HAL is the standard interface for implementing hardware on Android. It is independent of lower-level drivers.
  ### Android runtime
-  This part is relative for execution the android apps, wich works as follow: each program will have the own virtual machine in .DEX (dalvik executable format).
- This compilation of app may happen for two ways: AOT(compilation advance) and JIT(just in time).
+ This part is responsible for executing Android apps. Each program runs in its own virtual machine in .DEX (Dalvik Executable Format). App compilation can occur in two ways: AOT (Ahead-Of-Time) and JIT (Just-In-Time).
  ### Native C/C++ libraries
-  For my, this part is more interesting (i love reverse engineering). More components in android they created in native code (C/C++). And we can create our own .so in C++ for android application (let's talk about this later).
+  This part, which I find more interesting (as I love reverse engineering), involves many components in Android created in native code (C/C++). We can also create our own .so files in C++ for Android applications.
  ### Java API
-  Like this native C/C++ libraries, Java API is a bit more different, but consist in usage java packages for GUI or functionalities in own app, with characteristics exclusives to android.
+  Similar to native C/C++ libraries, the Java API utilizes Java packages for GUI or app functionalities with exclusive characteristics for Android.
  ### System apps
   Android comes with a basic set of apps for email, messaging, calendar, web browsing, contacts, and more.
 
 
 
 ## Reverse Engineering
- This topic is more detailed because I love RE and is my area of ​​activity. We'll talking for this:
+ This topic is more detailed because I love reverse engineering and it's my area of expertise. We'll cover the following:
   - ABD
   - ROOT
   - APK
@@ -39,7 +38,7 @@ This image cover a lot layers, and we'll talk about all.
    
 
 ### ABD
-It is a command-line interface that allows direct communication and control of Android devices connected to a host computer. This versatile tool allows developers to access advanced Android operating system features and perform a variety of essential tasks such as installing and uninstalling apps, transferring files, diagnosing problems, simulating touch events, and more. It works via USB or TCP. most used commands: 
+ADB (Android Debug Bridge) is a command-line interface that allows direct communication and control of Android devices connected to a host computer. This versatile tool enables developers to access advanced Android OS features and perform various essential tasks such as installing/uninstalling apps, transferring files, diagnosing problems, simulating touch events, etc. It works via USB or TCP. The most used commands are:
 ```
 adb root
 adb shell
@@ -50,11 +49,10 @@ adb reboot bootloader
 ```
 
 ### ROOT
- The android is based on linux kernel, so command line is more used. And exists the user permissions, the root is the level with all permission (sudo).
- To get root in this device is necessary granted the "img.boot" (modified image for root access) relative our dispositive and use "fastoot" tool. Firstly connect the device in this PC, and use adb reboot bootloader (for the device in mode recovery) after use fastboot boot "boot.img", ready, our device is rooted!
+ Since Android is based on the Linux kernel, the command line is extensively used. With user permissions, "root" is the level with all permissions (similar to sudo). To root a device, it's necessary to grant access to "img.boot" (a modified image for root access) specific to our device and use the "fastboot" tool. After connecting the device to the PC, use adb reboot bootloader to boot the device into recovery mode, then use fastboot boot "boot.img". After that, our device is rooted.
 
  ### APK
- APK is the extension of the app, like this .jar or .zip, then in our device connected in PC use adb push "path to the app" with in this PC will have "base.apk". The .apk struct is: 
+ APK is the extension for Android applications. To access an APK file on a connected device, use adb push "path to the app"; then, on the PC, the APK will be accessible as "base.apk". The structure of the .apk file is as follows:
 ```
   .apk
     |- extension for lib C/C++
@@ -70,8 +68,7 @@ Here, you can see that JNI acts as an intermediary between the JVM and the C++ .
 
 ### Analisys whit IDA
 ### static
- When descompact the .apk file, in the folders we can find the .so jni, and analysis it!
- The reverse engineering in .so is so simple, but is necessary this plugin:
+When unpacking the .apk file, we can find the .so JNI folders and analyze them. Reverse engineering .so files is relatively simple, but a plugin is required:
   - jni_all.h
 in the arm64-v8a (x64 architeture) we don't have the problem of rebuilding structures.
 so you will often come across this:
@@ -83,15 +80,15 @@ void foo(__int64 a1, __int64 a2, __int8* a3)
 }
  ```
 The analysis they is so complicated, but not be afraid, just click on the variable and press "y"
-the display is:
+to display is:
 ```c++
 __int64 a1
 ```
-just modify to
+Modify it to:
 ```c++
 JNIEnv* a1
 ```
-it's the magic 
+And it works like magic:
 ```c++
 a4 = (*env)->GetStringUTFChars(a3, 0)
 ```
