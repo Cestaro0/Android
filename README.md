@@ -90,7 +90,7 @@ JNIEnv* a1
 ```
 And it works like magic:
 ```c++
-a4 = (*a1)->GetStringUTFChars(a3, 0)
+a4 = (*a1)->NewStringUTF(env, a3, 0)
 ```
 after, press "n" and rename the variable for conventional name
 
@@ -102,7 +102,7 @@ now see how it turned out after fixes
 void foo(JNIEnv* env, jclass clazz, __int8* str)
 {
  wchar_t* a4;
- a4 = (*env)->GetStringUTFChars(env, str, 0)
+ a4 = (*env)->NewStringUTF(env, str, 0)
 }
 ```
 In x32 it is more complicated as it does not accept this modification, so you must use this header, on ida access
