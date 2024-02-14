@@ -135,7 +135,7 @@ android:/ # chmod 755 /data/local/tmp/<android_server>
 android:/ # ./data/local/tmp/<android_server>
 ```
 After that, minimize this terminal and open another one from adb, let's redirect the ports so we can debug with IDA:
-````
+```
 C:\> adb forward tcp:23946 tcp:23946
 ```
 Starting debugging
