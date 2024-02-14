@@ -97,9 +97,13 @@ after, press "n" and rename the variable for conventional name
 ```c++
 env
 ```
-this completed
-```c++
-a4 = (*env)->GetStringUTFChars(a3, 0)
+now see how it turned out after fixes
+```
+void foo(JNIEnv* env, jclass clazz, __int8* str)
+{
+ wchar_t* a4;
+ a4 = (*env)->GetStringUTFChars(env, str, 0)
+}
 ```
 In x32 it is more complicated as it does not accept this modification, so you must use this header, on ida access
 File > Load File > Parse C header file
