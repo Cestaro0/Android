@@ -90,9 +90,17 @@ JNIEnv* a1
 ```
 And it works like magic:
 ```c++
+a4 = (*a1)->GetStringUTFChars(a3, 0)
+```
+after, press "n" and rename the variable for conventional name
+
+```c++
+env
+```
+this completed
+```c++
 a4 = (*env)->GetStringUTFChars(a3, 0)
 ```
-
 In x32 it is more complicated as it does not accept this modification, so you must use this header, on ida access
 File > Load File > Parse C header file
 and choose the jni_all.h donwload in this <a href="https://gist.github.com/jcalabres/bf8d530b3f18c30ca6f66388357b1d91">link</a>
