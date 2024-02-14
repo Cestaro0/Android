@@ -98,7 +98,7 @@ after, press "n" and rename the variable for conventional name
 env
 ```
 now see how it turned out after fixes
-```
+```c++
 void foo(JNIEnv* env, jclass clazz, __int8* str)
 {
  wchar_t* a4;
