@@ -1,9 +1,11 @@
 # Android
 My notes about android, programming, reverse enginnering.
-
 The document is talk about the following tópics:
  - Android architeture
  - Reverse Engineering whit IDA PRO
+   
+# Credits
+Thanks, <a href="https://github.com/keowu">keowu<a/> for explaining it to me and showing me these documents on the subject: *Analisys whit IDA*
 
 ## Android architeture
 First is necessary understand that android platform is based in linux kernel.
